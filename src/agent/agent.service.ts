@@ -16,14 +16,14 @@ export class AgentService {
 
   async createAgent(data: Agent): Promise<Agent> {
     return this.prisma.agent.create({
-      data,
+      data
     })
   }
 
   async updateAgent(id:number, data:Agent): Promise<Agent>{
     return this.prisma.agent.update({
       where:{id:Number(id)},
-      data: {name: data.name} 
+      data: {name: data.name, email: data.email} 
     })
 }
   async deleteAgent(id:Number): Promise<Agent> {

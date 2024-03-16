@@ -2,7 +2,7 @@ import { AgentService } from "./agent.service";
 import { Agent } from "./agent.model";
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 
-// @Controller('api/v1/agent')
+@Controller('api/v1/agent')
 export class AgentController {
   constructor(private readonly agentService: AgentService) {}
 
@@ -18,7 +18,7 @@ export class AgentController {
   }
 
   @Get('id')
-  async getAgent(@Param('id') id: number):Promise<Agent | null>{
+  async getAgent(@Param('id') id: number):Promise<Agent>{
     return this.agentService.getAgent(id)
   }
 
@@ -26,6 +26,7 @@ export class AgentController {
   async deletAgent(@Param('id') id: number):Promise<Agent>{
     return this.agentService.deleteAgent(id)
   }
+  
   @Put('id')
   async updateAgent(@Param('id') id:number,@Body()postAgent: Agent):Promise<Agent>{
     return this.agentService.updateAgent(id, postAgent)
