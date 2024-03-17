@@ -11,12 +11,12 @@ export class AgentService {
   }
 
   async getAgent(id: number): Promise<Agent | null> {
-    return this.prisma.agent.findUnique({ where: { id: Number(id) } })
+    return this.prisma.agent.findUnique({ where: {id:Number(id)}})
   }
 
   async createAgent(data: Agent): Promise<Agent> {
     return this.prisma.agent.create({
-      data
+      data,
     })
   }
 
@@ -26,7 +26,7 @@ export class AgentService {
       data: {name: data.name, email: data.email} 
     })
 }
-  async deleteAgent(id:Number): Promise<Agent> {
+  async deleteAgent(id:number): Promise<Agent> {
     return this.prisma.agent.delete({
       where:{id: Number(id)}
     })
