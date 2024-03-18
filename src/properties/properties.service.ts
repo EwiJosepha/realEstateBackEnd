@@ -1,8 +1,9 @@
 import { PrismaService } from "./prisma.service";
-import { Properties } from "@prisma/client";
+import { Properties, Prisma } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
 
-Injectable()
+
+@Injectable()
 
 export class PropertiesService {
   constructor(private prisma: PrismaService) { }
@@ -13,14 +14,18 @@ export class PropertiesService {
 
   async getOneProperty(id: number): Promise<Properties> {
     return this.prisma.properties.findUnique({
-      where: { id: Number(id) }
+      where: { id: Number(id) },
+      include: {
+        agent: true,
+      }
     })
   }
 
   async postProperties(data: Properties): Promise<Properties> {
+  
     return this.prisma.properties.create({
-      data,
-    })
+      data
+    });
   }
 
   async updateProperties(id: number, data: Properties): Promise<Properties> {
