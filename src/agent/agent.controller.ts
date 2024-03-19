@@ -23,8 +23,8 @@ export class AgentController {
   }
 
   @Delete(':id')
-  async deletAgent(@Param('id') id: number):Promise<Agent>{
-    return this.agentService.deleteAgent(+id)
+  async deletAgent(@Param('id') id: number):Promise<void>{
+    return this.agentService.deleteAgent(id)
   }
   
   @Put(':id')

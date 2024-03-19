@@ -16,7 +16,8 @@ datasource db {
 model Agent {
   id       Int         @default(autoincrement()) @id
   email    String      @unique
-  name     String?
+  name String?
+  hashpassword  String? @default("default_password")
   properties Properties[]
 }
 

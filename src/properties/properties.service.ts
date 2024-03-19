@@ -21,8 +21,15 @@ export class PropertiesService {
     })
   }
 
+  async getPropertiesByAgentId(agentId: number): Promise<Properties[]> {
+    return this.prisma.properties.findMany({
+      where: {
+        agentId: agentId,
+      },
+    });
+  }
+
   async postProperties(data: Properties): Promise<Properties> {
-  
     return this.prisma.properties.create({
       data
     });
@@ -35,9 +42,9 @@ export class PropertiesService {
     })
   }
 
-  async deleteProperties(id:number):Promise<Properties>{
+  async deleteProperties(id: number): Promise<Properties> {
     return this.prisma.properties.delete({
-      where:{id:Number(id)}
+      where: { id: Number(id) }
     })
   }
 }

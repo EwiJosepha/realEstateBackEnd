@@ -1,7 +1,7 @@
 
 import { PropertiesService } from "./properties.service";
 import { Properties } from "@prisma/client";
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
 import { PropertiesWithAgent } from "./properties.model";
 
 @Controller('properties')
@@ -36,4 +36,17 @@ export class PropertyController {
     return this.propertiesService.deleteProperties(id)
   }
 
+
+  @Get()
+  async getAllPropertieswithAgentId(@Query('agentId') agentId: number): Promise<Properties[]> {
+    if (agentId === 1) {
+      // Return properties where agentId equals 1
+      return this.propertiesService.getPropertiesByAgentId(agentId);
+    } else {
+      // Return all properties
+      return this.propertiesService.getAllProperties();
+    }
+  }
 }
+
+
