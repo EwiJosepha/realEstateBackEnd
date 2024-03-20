@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, Req, Res } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { PrismaService } from './prisma.service';
 import * as bcrypt from 'bcrypt'
 import { JwtService } from '@nestjs/jwt';
 import { jwtSecret } from "../utils/constants"
+import { Request, Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +34,7 @@ export class AuthService {
   }
 
 
-  async signIn(dto: CreateAuthDto) {
+  async signIn(dto: CreateAuthDto, req:Request, res:Response,) {
     const { email, hashpassword } = dto
     const foundAgent = await this.prisma.agent.findUnique({
       where: { email: email }
@@ -48,7 +49,7 @@ export class AuthService {
     console.log(`Hashed Password from DB: ${foundAgent.hashpassword}`);
     console.log(`Provided Password: ${hashpassword}`);
 
-    if (!isMatch) {
+    if (isMatch) {
       throw new BadRequestException("invalid password")
     }
 
@@ -56,12 +57,18 @@ export class AuthService {
 
     // Signing jwt and returning to the agent
 
-    return { token }
+    if(!token) {
+      throw new ForbiddenException()
+    }
+
+    res.cookie('token', token)
+    return res.send({message: "logged in Succesfully"})
   }
 
 
-  async signOut() {
-    return
+  async signOut( req:Request, res:Response,) {
+    res.clearCookie('token')
+    return res.send({message: "logged out succesfully"})
   }
 
   async hashPassword(password: string) {

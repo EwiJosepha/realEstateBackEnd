@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Res } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
@@ -19,13 +19,13 @@ export class AuthController {
   }
 
   @Post('signin')
-  signin(@Body() dto: CreateAuthDto) {
-    return this.authService.signIn(dto)
+  signin(@Body() dto: CreateAuthDto, @Req() req, @Res() res) {
+    return this.authService.signIn(dto,req, res)
   }
-  
+
   @Get('signout')
-  signout(@Body() dto: CreateAuthDto) {
-    return this.authService.signOut()
+  signout(@Body()  @Req() req, @Res() res, ) {
+    return this.authService.signOut(req, res)
   }
 
 }

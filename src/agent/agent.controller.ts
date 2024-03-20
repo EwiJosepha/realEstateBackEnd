@@ -1,6 +1,8 @@
 import { AgentService } from "./agent.service";
 import { Agent } from "./agent.model";
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, Req } from "@nestjs/common";
+
+
 
 @Controller('api/v1/agent')
 export class AgentController {
@@ -12,15 +14,16 @@ export class AgentController {
     return this.agentService.getAllAgent()
   }
 
+
   @Post()
   async postAgent(@Body() postData: Agent): Promise<Agent> {
     return this.agentService.createAgent(postData)
   }
 
-  @Get(':id')
-  async getAgent(@Param('id') id: number):Promise<Agent>{
-    return this.agentService.getAgent(id)
-  }
+  // @Get(':id')
+  // async getAgent(@Param('id') id: number, @Req() req):Promise<Agent>{
+  //   return this.agentService.getAgent(id, req)
+  // }
 
   @Delete(':id')
   async deletAgent(@Param('id') id: number):Promise<void>{
@@ -31,4 +34,10 @@ export class AgentController {
   async updateAgent(@Param('id') id: number,@Body()postAgent: Agent):Promise<Agent>{
     return this.agentService.updateAgent(id, postAgent)
   }
+
+  
+  @Get('/specificId')
+  async getCurrentAgent(@Req() req):Promise<Agent> {
+    return this.agentService.getCurrentAgent(req)
+  } 
 }
