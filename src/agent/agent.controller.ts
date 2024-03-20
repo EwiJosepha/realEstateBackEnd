@@ -34,10 +34,4 @@ export class AgentController {
   async updateAgent(@Param('id') id: number,@Body()postAgent: Agent):Promise<Agent>{
     return this.agentService.updateAgent(id, postAgent)
   }
-
-  
-  @Get('/specificId')
-  async getCurrentAgent(@Req() req):Promise<Agent> {
-    return this.agentService.getCurrentAgent(req)
-  } 
 }

@@ -18,19 +18,19 @@ export class AgentService {
   //   return this.prisma.agent.findUnique({ where: { id: Number(id) } });
   // }
 
-  async createAgent(data: Agent): Promise < Agent > {
+  async createAgent(data: Agent): Promise<Agent> {
     return this.prisma.agent.create({
       data,
     });
   }
-    
-    async updateAgent(id: number, data: Agent): Promise < Agent | null > {
+
+  async updateAgent(id: number, data: Agent): Promise<Agent | null> {
     return this.prisma.agent.update({
       where: { id: Number(id) },
       data,
     });
   }
-  async deleteAgent(id: number): Promise < void> {
+  async deleteAgent(id: number): Promise<void> {
     await this.prisma.agent.delete({
       where: {
         id: id,
@@ -38,19 +38,9 @@ export class AgentService {
     });
   }
 
-  async getCurrentAgent(req: Request) {
-    const agentidd = req.cookies.id
-    console.log(agentidd);
-    const user = await this.prisma.agent.findUnique({
-      where: { id: agentidd },
-    });
-
-    return user;
-  }
-  }
+}
 
 
- 
 
-  
-  
+
+

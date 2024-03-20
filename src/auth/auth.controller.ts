@@ -1,7 +1,8 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Res, Headers } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Response } from 'express';
 
 
 @Controller('auth')
@@ -28,4 +29,23 @@ export class AuthController {
     return this.authService.signOut(req, res)
   }
 
+
+  @Get('current-agent')
+  async currentAgent(@Res() res: Response, @Headers('authorization') authorization: string ) {
+    console.log(authorization);
+
+    const token = authorization.split(' ').pop();
+
+    if (!token) {
+      return res.status(401).json({
+        message: 'Invalid Token',
+      });
+    }
+
+    const user = await this.authService.currentAgent(token);
+
+    return res.status(200).json({
+      user
+    })
+  }
 }
