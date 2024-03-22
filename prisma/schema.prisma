@@ -13,6 +13,28 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-const Agent = {
-  
+model Agent {
+  id       Int         @default(autoincrement()) @id
+  email    String      @unique
+  name String?
+  hashpassword  String? @default("default_password")
+  properties Properties[]
+}
+
+model Properties {
+  id               Int      @id @default(autoincrement()) 
+  name             String
+  type             String?
+  description      String
+  rooms            String
+  bath             Int
+  livingRooms      String
+  location         String
+  price            Int
+  areaInKm         String
+  rentOrSale       String
+  shortDescription String
+  images           String[]
+  agent            Agent     @relation(fields: [agentId], references: [id])
+  agentId          Int
 }
