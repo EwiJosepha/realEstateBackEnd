@@ -63,8 +63,8 @@ export class AuthService {
     }
 
     res.cookie('token', token)
-    res.cookie('agentId', foundAgent.id);
-    return res.send({ message: "logged in Succesfully" })
+    // res.cookie('agentId', foundAgent.id);
+    return res.send({message: token})
   }
 
 
@@ -74,7 +74,7 @@ export class AuthService {
   }
 
   async currentAgent(token: string) {
-    const user = await this.jwt.verifyAsync<{ id: number, email: string}>(token);
+    const user = await this.jwt.verifyAsync<{ id: number, email: string }>(token);
 
     return user;
   }
@@ -90,9 +90,7 @@ export class AuthService {
   }
 
   async signToken(args: { id: number, email: string }) {
-    const payload = args
-
-    console.log('siging', payload)
-    return this.jwt.signAsync(payload)
+    console.log('siging', args)
+    return this.jwt.signAsync(args)
   }
 }
