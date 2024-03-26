@@ -69,8 +69,9 @@ export class AuthService {
 
 
   async signOut(req: Request, res: Response,) {
+    
     res.clearCookie('token')
-    return res.send({ message: "logged out succesfully" })
+    return res.send({ message: ""})
   }
 
   async currentAgent(token: string) {
