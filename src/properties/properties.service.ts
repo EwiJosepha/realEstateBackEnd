@@ -23,10 +23,19 @@ export class PropertiesService {
 
   async getPropertiesByAgentId(agentId: number): Promise<Properties[]> {
     return this.prisma.properties.findMany({
-      where: {
-        agentId: agentId,
-      },
+      where: {agentId: Number(agentId)} ,
+      include : {
+        agent : true
+      }
     });
+  }
+
+  async searchByRoom(rooms: string): Promise<Properties[]> {
+    return this.prisma.properties.findMany({
+      where: {
+        rooms: rooms
+      }
+    })
   }
 
   async postProperties(data: Properties): Promise<Properties> {

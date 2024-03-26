@@ -13,10 +13,10 @@ export class AgentService {
 
   }
 
-  // async getAgent(id: number, req: Request): Promise<Agent | null> {
+  async getAgent(id: number): Promise<Agent | null> {
 
-  //   return this.prisma.agent.findUnique({ where: { id: Number(id) } });
-  // }
+    return this.prisma.agent.findUnique({ where: { id: Number(id) } });
+  }
 
   async createAgent(data: Agent): Promise<Agent> {
     return this.prisma.agent.create({

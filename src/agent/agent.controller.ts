@@ -20,10 +20,10 @@ export class AgentController {
     return this.agentService.createAgent(postData)
   }
 
-  // @Get(':id')
-  // async getAgent(@Param('id') id: number, @Req() req):Promise<Agent>{
-  //   return this.agentService.getAgent(id, req)
-  // }
+  @Get(':id')
+  async getAgent(@Param('id') id: number):Promise<Agent>{
+    return this.agentService.getAgent(id)
+  }
 
   @Delete(':id')
   async deletAgent(@Param('id') id: number):Promise<void>{
