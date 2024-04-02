@@ -11,7 +11,7 @@ import { jwtSecret } from 'src/utils/constants';
       global: true,
       secret: jwtSecret,
       signOptions: {
-        expiresIn: '5 days',
+        expiresIn: '10 days',
       }
     })
   ],
