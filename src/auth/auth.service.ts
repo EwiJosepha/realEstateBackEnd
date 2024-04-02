@@ -17,13 +17,13 @@ export class AuthService {
     })
 
     if (foundAgent) {
-      throw new BadRequestException('Email already exists')
+      throw new BadRequestException('Agent already exists')
     }
     const hashedPassword = await this.hashPassword(hashpassword)
     await this.prisma.agent.create({
       data: {
         email,
-        hashpassword
+        hashpassword: hashedPassword
       }
     })
 
@@ -37,8 +37,9 @@ export class AuthService {
   async signIn(dto: CreateAuthDto, req: Request, res: Response,) {
     const { email, hashpassword } = dto
     const foundAgent = await this.prisma.agent.findUnique({
-      where: { email: email }
+      where: { email: email}
     })
+    console.log(foundAgent);
 
     if (!foundAgent) {
       throw new BadRequestException('wrong credentials')
@@ -50,7 +51,7 @@ export class AuthService {
     console.log(`Hashed Password from DB: ${foundAgent.hashpassword}`);
     console.log(`Provided Password: ${hashpassword}`);
 
-    if (isMatch) {
+    if (!isMatch) {
       throw new BadRequestException("invalid password")
     }
 
@@ -64,14 +65,14 @@ export class AuthService {
 
     res.cookie('token', token)
     // res.cookie('agentId', foundAgent.id);
-    return res.send({message: token})
+    return res.send({ message: token })
   }
 
 
   async signOut(req: Request, res: Response,) {
-    
+
     res.clearCookie('token')
-    return res.send({ message: ""})
+    return res.send({ message: "" })
   }
 
   async currentAgent(token: string) {

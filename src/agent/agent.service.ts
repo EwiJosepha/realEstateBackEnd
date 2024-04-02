@@ -33,7 +33,7 @@ export class AgentService {
   async deleteAgent(id: number): Promise<void> {
     await this.prisma.agent.delete({
       where: {
-        id: id,
+        id: +id,
       },
     });
   }
