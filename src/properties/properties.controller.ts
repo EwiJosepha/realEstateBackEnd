@@ -43,8 +43,8 @@ export class PropertyController {
   }
 
 
-  @Get('room/:rooms') 
-  async getRooms (@Param('rooms') rooms: string) : Promise<Properties[]> {
+  @Get('room/:rooms')
+  async getRooms(@Param('rooms') rooms: string): Promise<Properties[]> {
     return this.propertiesService.searchByRoom(rooms)
   }
 }
