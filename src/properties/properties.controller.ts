@@ -2,12 +2,11 @@
 import { PropertiesService } from "./properties.service";
 import { Properties } from "@prisma/client";
 import { Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
-import { PropertiesWithAgent } from "./properties.model";
 
 @Controller('properties')
 
 export class PropertyController {
-  constructor(private readonly propertiesService: PropertiesService) { }
+  constructor(private readonly propertiesService: PropertiesService) {}
 
 
   @Get()

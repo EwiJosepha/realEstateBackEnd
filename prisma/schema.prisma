@@ -27,13 +27,14 @@ model Properties {
   type             String?
   description      String
   rooms            String
-  bath             Int
+  bath             String
+  kitchen          String?
   livingRooms      String
   location         String
   price            Int
   areaInKm         String
   rentOrSale       String
-  shortDescription String
+  shortDescription String?
   images           String[]
   agent            Agent     @relation(fields: [agentId], references: [id])
   agentId          Int
