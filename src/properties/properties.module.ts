@@ -8,4 +8,4 @@ import { Module } from "@nestjs/common";
   providers: [PropertiesService, PrismaService],
 })
 
-export class PropertiesModule{}
+export class PropertiesModule { }

@@ -1,5 +1,6 @@
 import { Prisma, Properties, Agent } from "@prisma/client";
 
+
 //  export class Properties implements Prisma.PropertiesCreateInput{
 //   id: number;
 //   name: string;
