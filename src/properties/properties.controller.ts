@@ -48,5 +48,3 @@ export class PropertyController {
     return this.propertiesService.searchByRoom(rooms)
   }
 }
-
-

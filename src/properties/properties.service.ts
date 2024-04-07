@@ -1,5 +1,5 @@
 import { PrismaService } from "./prisma.service";
-import { Properties, Prisma } from "@prisma/client";
+import { Prisma, Properties } from "@prisma/client";
 import { Injectable } from "@nestjs/common";
 
 
@@ -23,9 +23,9 @@ export class PropertiesService {
 
   async getPropertiesByAgentId(agentId: number): Promise<Properties[]> {
     return this.prisma.properties.findMany({
-      where: {agentId: Number(agentId)} ,
-      include : {
-        agent : true
+      where: { agentId: Number(agentId) },
+      include: {
+        agent: true
       }
     });
   }
