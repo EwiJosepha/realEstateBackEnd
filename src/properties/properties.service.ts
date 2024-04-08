@@ -14,7 +14,7 @@ export class PropertiesService {
 
   async getOneProperty(id: number): Promise<Properties> {
     return this.prisma.properties.findUnique({
-      where: { id: Number(id) },
+      where: { id: id },
       include: {
         agent: true,
       }
