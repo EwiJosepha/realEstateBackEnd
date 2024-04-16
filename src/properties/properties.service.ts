@@ -45,9 +45,11 @@ export class PropertiesService {
   }
 
   async updateProperties(id: number, data: Properties): Promise<Properties> {
+    const { images, ..._data } = data;
+
     return this.prisma.properties.update({
       where: { id: Number(id) },
-      data: { type: data.type }
+      data: _data
     })
   }
 

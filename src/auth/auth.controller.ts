@@ -42,10 +42,10 @@ export class AuthController {
       });
     }
 
-    const user = await this.authService.currentAgent(token);
+    const agentObj = await this.authService.currentAgent(token);
 
     return res.status(200).json({
-      user
+      agentObj
     })
   }
 }
