@@ -23,9 +23,9 @@ export class PropertiesService {
 
   async getPropertiesByAgentId(agentId: number): Promise<Properties[]> {
     return this.prisma.properties.findMany({
-      where: {agentId: Number(agentId)} ,
-      include : {
-        agent : true
+      where: { agentId: Number(agentId) },
+      include: {
+        agent: true
       }
     });
   }
@@ -34,6 +34,22 @@ export class PropertiesService {
     return this.prisma.properties.findMany({
       where: {
         rooms: rooms
+      }
+    })
+  }
+
+  async searchTypes(type: string): Promise<Properties[]> {
+    return this.prisma.properties.findMany({
+      where: {
+        type: type
+      }
+    })
+  }
+
+  async searchStatus(rentOrSale: string): Promise<Properties[]> {
+    return this.prisma.properties.findMany({
+      where: {
+        rentOrSale: rentOrSale
       }
     })
   }
@@ -56,6 +72,15 @@ export class PropertiesService {
   async deleteProperties(id: number): Promise<Properties> {
     return this.prisma.properties.delete({
       where: { id: Number(id) }
+    })
+  }
+
+  async searchRoomsBaths(rooms : string, bath: string): Promise<Properties[]> {
+    return this.prisma.properties.findMany({
+      where: {
+       rooms,
+      bath
+      }
     })
   }
 }

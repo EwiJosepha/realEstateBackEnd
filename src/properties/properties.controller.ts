@@ -47,6 +47,23 @@ export class PropertyController {
   async getRooms (@Param('rooms') rooms: string) : Promise<Properties[]> {
     return this.propertiesService.searchByRoom(rooms)
   }
+
+  @Get('types/:type')
+  async getTypes (@Param('type') type: string) :Promise<Properties[]> {
+    return this.propertiesService.searchTypes(type)
+  }
+
+  @Get("status/:rentOrSale")
+  async getStatus (@Param('rentOrSale') rentOrSale: string): Promise<Properties[]> {
+    return this.propertiesService.searchStatus(rentOrSale)
+  }
+
+  @Get()
+
+  async getBathRooms ( @Query("room") room: string, @Query ("bath") bath: string): Promise<Properties[]> {
+    return this.propertiesService.searchRoomsBaths(room, bath)
+  }
+
 }
 
 
