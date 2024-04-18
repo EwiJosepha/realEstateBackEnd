@@ -51,8 +51,6 @@ export class PropertyController {
     @Query("rentOrSale") rentOrSale: string,
     @Query("price") price: number,
     @Query("areaInKm") areaInKm: number,
-    // @Query("limit") limit?: string,
-    // @Query("page") page?: string
   ): Promise<Properties[]> {
     const filter = {};
     const priceParsed = +price
@@ -91,8 +89,6 @@ export class PropertyController {
       filter['areaInKm'] = {
         gte: +areaInKm
       }
-      console.log(areaInKm);
-
     }
 
     if (filter) {
