@@ -74,9 +74,6 @@ export class PropertyController {
     }
   }
 
-
-
-
   @Get()
   async getAllQueries(
     @Query("rooms") rooms: string,
@@ -84,13 +81,13 @@ export class PropertyController {
     @Query("bath") bath: string,
     @Query("rentOrSale") rentOrSale: string,
     @Query("price") price: number,
+    @Query("areaInKm") areaInKm: number,
     // @Query("limit") limit?: string,
     // @Query("page") page?: string
   ): Promise<Properties[]> {
     const filter = {};
     const priceParsed = +price
-    console.log(priceParsed);
-    
+
 
     if (bath) {
       filter['bath'] = bath;
@@ -105,13 +102,31 @@ export class PropertyController {
       filter['type'] = type;
     }
 
-    if(priceParsed < 500000){
-      filter['price'] = +price
-    }else{
-      throw new BadRequestException("querry not found")
+    if (priceParsed <= 500000) {
+      filter['price'] =
+      {
+        lte: priceParsed
+      }
+
+    } else if (priceParsed > 500000) {
+      filter['price'] = {
+        gte: priceParsed
+      }
     }
 
-    // Parse limit and page as integers
+    if(+areaInKm <= 101 || +areaInKm < 1000){
+      filter['areaInKm'] = {
+        lte: +areaInKm
+      }
+    }else if(+areaInKm > 1000){
+      filter['areaInKm'] = {
+        gte: +areaInKm
+      }
+      console.log(areaInKm);
+      
+    }
+
+    // Parse limit and page as zz
     // const parsedLimit = limit ? parseInt(limit, 10) : undefined;
     // const parsedPage = page ? parseInt(page, 10) : undefined;
 
