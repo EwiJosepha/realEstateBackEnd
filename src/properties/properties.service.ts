@@ -46,12 +46,23 @@ export class PropertiesService {
     })
   }
 
-  async searchStatus(rentOrSale: string): Promise<Properties[]> {
+  async searchRentOrSale(rentOrSale: string): Promise<Properties[]> {
     return this.prisma.properties.findMany({
       where: {
         rentOrSale: rentOrSale
       }
     })
+  }
+
+  async getAllPropertiesQueries(filter: any,): Promise<Properties[]> {
+    return this.prisma.properties.findMany({
+      where: filter
+    })
+  }
+
+  async paginationService(filter: any, limit: number, page: number): Promise<Properties[]> {
+    const skip = limit * (page - 1);
+    return this.prisma.properties.findMany({ where: filter, take: limit, skip: skip });
   }
 
   async postProperties(data: Properties): Promise<Properties> {
@@ -75,11 +86,11 @@ export class PropertiesService {
     })
   }
 
-  async searchRoomsBaths(rooms : string, bath: string): Promise<Properties[]> {
+  async searchRoomsBaths(rooms: string, bath: string): Promise<Properties[]> {
     return this.prisma.properties.findMany({
       where: {
-       rooms,
-      bath
+        rooms,
+        bath
       }
     })
   }
