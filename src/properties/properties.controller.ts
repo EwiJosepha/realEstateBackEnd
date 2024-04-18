@@ -9,21 +9,16 @@ export class PropertyController {
   constructor(private readonly propertiesService: PropertiesService) { }
 
 
-  // @Get()
-  // async getAllProperties(): Promise<Properties[]> {
-  //   return this.propertiesService.getAllProperties()
-  // }
-
-  @Post()
-
-  async createProperty(@Body() propertyData: Properties): Promise<Properties> {
-    return this.propertiesService.postProperties(propertyData)
-  }
-
   @Get(":id")
   async getOneProperty(@Param('id') id: number): Promise<Properties> {
     return this.propertiesService.getOneProperty(id)
   }
+
+  @Post()
+  async createProperty(@Body() propertyData: Properties): Promise<Properties> {
+    return this.propertiesService.postProperties(propertyData)
+  }
+
 
   @Put(":id")
   async updateProperties(@Param('id') id: number, @Body() createdProperty: Properties): Promise<Properties> {
@@ -46,32 +41,6 @@ export class PropertyController {
   @Get('room/:rooms')
   async getRooms(@Param('rooms') rooms: string): Promise<Properties[]> {
     return this.propertiesService.searchByRoom(rooms)
-  }
-
-
-  @Get("/rentOrSale")
-  async getRentOrSale(@Query('rentOrSale') rentOrSale: string): Promise<Properties[]> {
-
-    try {
-      if (!rentOrSale) {
-        throw new BadRequestException('RentOrSale parameter is required');
-      }
-
-      const properties = await this.propertiesService.searchRentOrSale(rentOrSale);
-
-      if (!properties || properties.length === 0) {
-        throw new NotFoundException('No properties found with the given rentOrSale');
-      }
-
-      return properties;
-    } catch (error) {
-      // Properly handle errors
-      if (error instanceof HttpException) {
-        throw error; // Re-throw HttpException with proper status code
-      } else {
-        throw new InternalServerErrorException('Internal server error occurred');
-      }
-    }
   }
 
   @Get()
@@ -114,23 +83,18 @@ export class PropertyController {
       }
     }
 
-    if(+areaInKm <= 101 || +areaInKm < 1000){
+    if (+areaInKm <= 101 || +areaInKm < 1000) {
       filter['areaInKm'] = {
         lte: +areaInKm
       }
-    }else if(+areaInKm > 1000){
+    } else if (+areaInKm > 1000) {
       filter['areaInKm'] = {
         gte: +areaInKm
       }
       console.log(areaInKm);
-      
+
     }
 
-    // Parse limit and page as zz
-    // const parsedLimit = limit ? parseInt(limit, 10) : undefined;
-    // const parsedPage = page ? parseInt(page, 10) : undefined;
-
-    // Call getAllPropertiesQueries with filter object
     if (filter) {
       return this.propertiesService.getAllPropertiesQueries(filter)
 
@@ -151,8 +115,8 @@ export class PropertyController {
   ): Promise<Properties[]> {
     const filter = {};
     // Populate filter object based on query parameters...
-    const parsedLimit = limit ? parseInt(limit, 10) : 10; // Default limit to 10 if not provided
-    const parsedPage = page ? parseInt(page, 10) : 1; // Default page to 1 if not provided
+    const parsedLimit = limit ? parseInt(limit, 10) : 10;
+    const parsedPage = page ? parseInt(page, 10) : 1; 
     if (parsedLimit && parsedPage) {
       return this.propertiesService.paginationService(filter, parsedLimit, parsedPage);
 
@@ -161,13 +125,3 @@ export class PropertyController {
     }
   }
 }
-
-
-// @Get()
-// async getPagination(@Query("limit", ParseIntPipe) limit:number, @Query("page", ParseIntPipe) page: number): Promise<Properties[]> {
-//   return this.propertiesService.pagination(limit, page)
-// } 
-
-
-
-
