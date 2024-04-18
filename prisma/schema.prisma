@@ -32,7 +32,7 @@ model Properties {
   livingRooms      String
   location         String
   price            Int
-  areaInKm         String
+  areaInKm         Int
   rentOrSale       String
   shortDescription String?
   images           String[]
