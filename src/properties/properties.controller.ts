@@ -49,71 +49,81 @@ export class PropertyController {
   }
 
 
-  // @Get("/rentOrSale")
-  // async getRentOrSale(@Query('rentOrSale') rentOrSale: string): Promise<Properties[]> {
+  @Get("/rentOrSale")
+  async getRentOrSale(@Query('rentOrSale') rentOrSale: string): Promise<Properties[]> {
 
-  //   try {
-  //     if (!rentOrSale) {
-  //       throw new BadRequestException('RentOrSale parameter is required');
-  //     }
+    try {
+      if (!rentOrSale) {
+        throw new BadRequestException('RentOrSale parameter is required');
+      }
 
-  //     const properties = await this.propertiesService.searchRentOrSale(rentOrSale);
+      const properties = await this.propertiesService.searchRentOrSale(rentOrSale);
 
-  //     if (!properties || properties.length === 0) {
-  //       throw new NotFoundException('No properties found with the given rentOrSale');
-  //     }
+      if (!properties || properties.length === 0) {
+        throw new NotFoundException('No properties found with the given rentOrSale');
+      }
 
-  //     return properties;
-  //   } catch (error) {
-  //     // Properly handle errors
-  //     if (error instanceof HttpException) {
-  //       throw error; // Re-throw HttpException with proper status code
-  //     } else {
-  //       throw new InternalServerErrorException('Internal server error occurred');
-  //     }
-  //   }
-  // }
-
-
+      return properties;
+    } catch (error) {
+      // Properly handle errors
+      if (error instanceof HttpException) {
+        throw error; // Re-throw HttpException with proper status code
+      } else {
+        throw new InternalServerErrorException('Internal server error occurred');
+      }
+    }
+  }
 
 
-  // @Get()
-  // async getAllQueries(
-  //   @Query("rooms") rooms: string,
-  //   @Query("type") type: string,
-  //   @Query("bath") bath: string,
-  //   @Query("rentOrSale") rentOrSale: string,
-  //   // @Query("limit") limit?: string,
-  //   // @Query("page") page?: string
-  // ): Promise<Properties[]> {
-  //   const filter = {};
 
-  //   if (bath) {
-  //     filter['bath'] = bath;
-  //   }
-  //   if (rooms) {
-  //     filter['rooms'] = rooms;
-  //   }
-  //   if (rentOrSale) {
-  //     filter['rentOrSale'] = rentOrSale;
-  //   }
-  //   if (type) {
-  //     filter['type'] = type;
-  //   }
 
-  //   // Parse limit and page as integers
-  //   // const parsedLimit = limit ? parseInt(limit, 10) : undefined;
-  //   // const parsedPage = page ? parseInt(page, 10) : undefined;
+  @Get()
+  async getAllQueries(
+    @Query("rooms") rooms: string,
+    @Query("type") type: string,
+    @Query("bath") bath: string,
+    @Query("rentOrSale") rentOrSale: string,
+    @Query("price") price: number,
+    // @Query("limit") limit?: string,
+    // @Query("page") page?: string
+  ): Promise<Properties[]> {
+    const filter = {};
+    const priceParsed = +price
+    console.log(priceParsed);
+    
 
-  //   // Call getAllPropertiesQueries with filter object
-  //   if (filter) {
-  //     return this.propertiesService.getAllPropertiesQueries(filter)
+    if (bath) {
+      filter['bath'] = bath;
+    }
+    if (rooms) {
+      filter['rooms'] = rooms;
+    }
+    if (rentOrSale) {
+      filter['rentOrSale'] = rentOrSale;
+    }
+    if (type) {
+      filter['type'] = type;
+    }
 
-  //   } else {
-  //     return this.propertiesService.getAllProperties()
+    if(priceParsed < 500000){
+      filter['price'] = +price
+    }else{
+      throw new BadRequestException("querry not found")
+    }
 
-  //   }
-  // }
+    // Parse limit and page as integers
+    // const parsedLimit = limit ? parseInt(limit, 10) : undefined;
+    // const parsedPage = page ? parseInt(page, 10) : undefined;
+
+    // Call getAllPropertiesQueries with filter object
+    if (filter) {
+      return this.propertiesService.getAllPropertiesQueries(filter)
+
+    } else {
+      return this.propertiesService.getAllProperties()
+
+    }
+  }
 
   @Get()
   async paginateProperties(
