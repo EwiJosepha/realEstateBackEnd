@@ -77,42 +77,45 @@ export class PropertyController {
 
 
 
+  // @Get()
+  // async getAllQueries(
+  //   @Query("rooms") rooms: string,
+  //   @Query("type") type: string,
+  //   @Query("bath") bath: string,
+  //   @Query("rentOrSale") rentOrSale: string,
+  //   // @Query("limit") limit?: string,
+  //   // @Query("page") page?: string
+  // ): Promise<Properties[]> {
+  //   const filter = {};
+
+  //   if (bath) {
+  //     filter['bath'] = bath;
+  //   }
+  //   if (rooms) {
+  //     filter['rooms'] = rooms;
+  //   }
+  //   if (rentOrSale) {
+  //     filter['rentOrSale'] = rentOrSale;
+  //   }
+  //   if (type) {
+  //     filter['type'] = type;
+  //   }
+
+  //   // Parse limit and page as integers
+  //   // const parsedLimit = limit ? parseInt(limit, 10) : undefined;
+  //   // const parsedPage = page ? parseInt(page, 10) : undefined;
+
+  //   // Call getAllPropertiesQueries with filter object
+  //   if (filter) {
+  //     return this.propertiesService.getAllPropertiesQueries(filter)
+
+  //   } else {
+  //     return this.propertiesService.getAllProperties()
+
+  //   }
+  // }
+
   @Get()
-  async getAllQueries(
-    @Query("rooms") rooms: string,
-    @Query("type") type: string,
-    @Query("bath") bath: string,
-    @Query("rentOrSale") rentOrSale: string,
-    // @Query("limit") limit?: string,
-    // @Query("page") page?: string
-  ): Promise<Properties[]> {
-    const filter = {};
-
-    if (bath) {
-      filter['bath'] = bath;
-    }
-    if (rooms) {
-      filter['rooms'] = rooms;
-    }
-    if (rentOrSale) {
-      filter['rentOrSale'] = rentOrSale;
-    }
-    if (type) {
-      filter['type'] = type;
-    }
-
-    // Parse limit and page as integers
-    // const parsedLimit = limit ? parseInt(limit, 10) : undefined;
-    // const parsedPage = page ? parseInt(page, 10) : undefined;
-
-    // Call getAllPropertiesQueries with filter object
-    if (filter) {
-      return this.propertiesService.getAllPropertiesQueries(filter)
-
-    }
-  }
-
-  @Get('pagination')
   async paginateProperties(
     @Query("rooms") rooms: string,
     @Query("type") type: string,
@@ -128,7 +131,7 @@ export class PropertyController {
     if (parsedLimit && parsedPage) {
       return this.propertiesService.paginationService(filter, parsedLimit, parsedPage);
 
-    }else{
+    } else {
       return this.propertiesService.getAllProperties()
     }
   }
