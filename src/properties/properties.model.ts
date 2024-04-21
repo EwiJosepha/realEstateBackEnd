@@ -25,4 +25,5 @@ interface PropertiesWithAgent extends Properties {
 
 export type {
   PropertiesWithAgent,
+  Properties
 }

@@ -1,6 +1,6 @@
 
 import { PropertiesService } from "./properties.service";
-import { Properties } from "@prisma/client";
+import { Properties } from "./properties.model";
 import { BadRequestException, Body, Controller, Delete, Get, HttpException, InternalServerErrorException, NotFoundException, Param, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
 
 @Controller('properties')
