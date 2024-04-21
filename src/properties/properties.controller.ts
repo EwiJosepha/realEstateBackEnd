@@ -1,7 +1,17 @@
-
+import { PrismaClient } from "@prisma/client";
 import { PropertiesService } from "./properties.service";
 import { Properties } from "./properties.model";
 import { BadRequestException, Body, Controller, Delete, Get, HttpException, InternalServerErrorException, NotFoundException, Param, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
+
+const prisma = new PrismaClient();
+
+// Check if Properties model exists
+
+if ('agent' in prisma) {
+  console.log('agent model exists');
+} else {
+  console.log('Properties model does not exist');
+}
 
 @Controller('properties')
 
