@@ -60,9 +60,12 @@ export class PropertiesService {
     })
   }
 
-  async paginationService(filter: any, limit: number, page: number): Promise<Properties[]> {
-    const skip = limit * (page - 1);
-    return this.prisma.properties.findMany({ where: filter, take: limit, skip: skip });
+  async paginationService(limit: number, page: number): Promise<Properties[]> {
+    const skip = limit * (page - 1)
+    return this.prisma.properties.findMany({
+      take: limit,
+      skip: skip
+    })
   }
 
   async postProperties(data: Properties): Promise<Properties> {
