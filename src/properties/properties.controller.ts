@@ -1,6 +1,6 @@
 
 import { PropertiesService } from "./properties.service";
-import { Properties } from "@prisma/client";
+import { Properties } from "./properties.model";
 import { BadRequestException, Body, Controller, Delete, Get, HttpException, InternalServerErrorException, NotFoundException, Param, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
 
 @Controller('properties')
@@ -44,17 +44,20 @@ export class PropertyController {
   }
 
   @Get()
-  async getAllQueries(
+  async getProperties(
     @Query("rooms") rooms: string,
     @Query("type") type: string,
     @Query("bath") bath: string,
     @Query("rentOrSale") rentOrSale: string,
     @Query("price") price: number,
     @Query("areaInKm") areaInKm: number,
+    @Query("limit") limit?: string,
+    @Query("page") page?: string
   ): Promise<Properties[]> {
     const filter = {};
-    const priceParsed = +price
 
+    const priceParsed = +price;
+    const areaInKmParsed = +areaInKm;
 
     if (bath) {
       filter['bath'] = bath;
@@ -70,54 +73,52 @@ export class PropertyController {
     }
 
     if (priceParsed <= 500000) {
-      filter['price'] =
-      {
+      filter['price'] = {
         lte: priceParsed
-      }
-
+      };
     } else if (priceParsed > 500000) {
       filter['price'] = {
         gte: priceParsed
-      }
+      };
     }
 
-    if (+areaInKm <= 101 || +areaInKm < 1000) {
+    if (areaInKmParsed <= 950) {
       filter['areaInKm'] = {
-        lte: +areaInKm
-      }
-    } else if (+areaInKm > 1000) {
+        lte: areaInKmParsed
+      };
+    } else if (areaInKmParsed > 950) {
       filter['areaInKm'] = {
-        gte: +areaInKm
-      }
+        gte: areaInKmParsed
+      };
     }
 
-    if (filter) {
-      return this.propertiesService.getAllPropertiesQueries(filter)
-
+    if (limit && page) {
+      const parsedLimit = parseInt(limit, 10);
+      const parsedPage = parseInt(page, 10);
+      return this.propertiesService.paginationService(parsedLimit, parsedPage);
     } else {
-      return this.propertiesService.getAllProperties()
-
+      return this.propertiesService.getAllPropertiesQueries(filter);
     }
   }
 
-  @Get()
-  async paginateProperties(
-    @Query("rooms") rooms: string,
-    @Query("type") type: string,
-    @Query("bath") bath: string,
-    @Query("rentOrSale") rentOrSale: string,
-    @Query("limit") limit?: string,
-    @Query("page") page?: string
-  ): Promise<Properties[]> {
-    const filter = {};
-    // Populate filter object based on query parameters...
-    const parsedLimit = limit ? parseInt(limit, 10) : 10;
-    const parsedPage = page ? parseInt(page, 10) : 1; 
-    if (parsedLimit && parsedPage) {
-      return this.propertiesService.paginationService(filter, parsedLimit, parsedPage);
+  // @Get()
+  // async paginateProperties(
+  //   @Query("rooms") rooms: string,
+  //   @Query("type") type: string,
+  //   @Query("bath") bath: string,
+  //   @Query("rentOrSale") rentOrSale: string,
+  //   @Query("limit") limit?: string,
+  //   @Query("page") page?: string
+  // ): Promise<Properties[]> {
+  //   const filter = {};
+  //   // Populate filter object based on query parameters...
+  //   const parsedLimit = limit ? parseInt(limit, 10) : 10;
+  //   const parsedPage = page ? parseInt(page, 10) : 1; 
+  //   if (parsedLimit && parsedPage) {
+  //     return this.propertiesService.paginationService(filter, parsedLimit, parsedPage);
 
-    } else {
-      return this.propertiesService.getAllProperties()
-    }
-  }
+  //   } else {
+  //     return this.propertiesService.getAllProperties()
+  //   }
+  // }
 }
