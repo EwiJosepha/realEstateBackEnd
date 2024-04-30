@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-import { Prisma, Properties, Agent } from "@prisma/client";
+import { Prisma, Properties, Agent } from "@prisma/client/edge";
 
 
 //  export class Properties implements Prisma.PropertiesCreateInput{
@@ -19,9 +18,6 @@ import { Prisma, Properties, Agent } from "@prisma/client";
 //   agent:  Prisma.AgentCreateNestedOneWithoutPropertiesInput;
 //   agentId: number;
 //  }
-
-
-
 
 interface PropertiesWithAgent extends Properties {
   agent: Agent;
