@@ -10,6 +10,7 @@ import { Request, Response } from 'express';
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService, private jwt: JwtService) { }
+
   async signUp(dto: CreateAuthDto) {
     const { email, hashpassword } = dto
     const foundAgent = await this.prisma.agent.findUnique({
@@ -29,7 +30,7 @@ export class AuthService {
 
     console.log(hashedPassword);
 
-    return { message: "hey there" }
+    return { message: "registered succefully" }
 
   }
 
