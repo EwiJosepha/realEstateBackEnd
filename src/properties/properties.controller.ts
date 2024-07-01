@@ -1,6 +1,6 @@
 import { PropertiesService } from "./properties.service";
 import { Properties } from "./properties.model";
-import { BadRequestException, Body, Controller, Delete, Get,  InternalServerErrorException, Param, ParseIntPipe, Post, Put, Query } from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, Put, Query } from "@nestjs/common";
 
 @Controller('properties')
 

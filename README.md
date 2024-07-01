@@ -1,73 +1,170 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# D&J Backend Collection
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The D&J Backend Collection is a real estate web application built using NestJS, Prisma, and PostgreSQL. It provides a robust backend infrastructure for managing real estate listings, user authentication, and CRUD operations.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Table of Contents
 
-## Description
+Features
+Technology Stack
+Getting Started
+Prerequisites
+Installation
+Database Setup
+API Documentation
+Contributing
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Features
 
-## Installation
+User Authentication (Login, Logout, Registration)
+CRUD operations for real estate listings
+Secure data storage using PostgreSQL
+Integration with Prisma as the ORM (Object-Relational Mapping) layer
+Modular and scalable architecture using NestJS
 
-```bash
-$ npm install
-```
+## Technology Stack
 
-## Running the app
+Technology Stack
+Backend Framework: NestJS
+ORM: Prisma
+Database: PostgreSQL
 
-```bash
-# development
-$ npm run start
+## Getting Started
 
-# watch mode
-$ npm run start:dev
+### Pre-requisites
 
-# production mode
-$ npm run start:prod
-```
+Node.js (version 14 or higher)
+PostgreSQL (version 12 or higher)
 
-## Test
+### Installation
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+git clone https://github.com/EwiJosepha/d-and-j-backend.git
 ```
 
-## Support
+cd into the repo and install dependencies
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```bash
+   npm install
+```
 
-## Stay in touch
+### Database Setup
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Create a new PostgreSQL database for the project.
+Update the database connection details in the .env file:
 
-## License
+```bash
+DATABASE_URL="postgresql://username:password@localhost:5432/your db?schema=public"
+JWT_SECRET=your_secret
+```
 
-Nest is [MIT licensed](LICENSE).
+```bash
+npx prisma generate
+```
+
+### Start the development server:
+
+```bash
+npm run start:dev
+```
+
+## Api Documentation
+
+_dev_base_url : <http://localhost:4000>_
+_prod_base_url : https://dandj-collection.vercel.app.app/_
+
+- Available routes
+
+  - [Base Route](#base-route)
+
+  - [Authentication](#authentication)
+
+    - [Singup](#sign-up)
+    - [login](#login)
+
+  - [properties](#properties)
+
+    - [Get agent Properties](#get-agent-properties)
+    - [Create Property](#create-agent-property)
+    - [Query properties](#query-properties)
+    - [Edit property](#edit-property)
+    - [Delete property](#delete-property)
+
+    - #### Sign Up
+
+      ```bash
+          Post("/signup")
+          - # body: require
+              {
+                  "name": "test_username",
+                  "email: "test _password",
+                  "password": "test_password",
+              }
+          - # response: status - 200
+              {
+                  message: "Signup Successfull",
+                  data: "<jwt_token>",
+              }
+      ```
+
+- #### Login
+
+     ```bash
+              Post("/login")
+              - # body: require
+                  {
+                      "email": "test_email",
+                      "password": "test_password",
+                  }
+              - # response: status - 200
+                  {
+                      message: "login  Successfull",
+                      data: "<jwt_token>",
+                  }
+          ```
+
+  - #### Create Property
+
+                  Post("/properties/")
+                  - # header: required
+                      {
+                          "Authorization": "Bearer <jwt_token>"
+                      }
+                  - # body: required
+          ```` bash
+              {
+                          "agentId": "<id>","name":"String",
+                          "type":"String",
+                          "description":"String","rooms" :"String",
+                          "bath" : "String",
+                          "kitchen" :"String",
+                          "livingRooms": "String",
+                          "location":"String",
+                          "price":"Int",
+                          "areaInKm":"Int",
+                          "rentOrSale":"String",
+                          "shortDescription":"String",
+                          "images":"String",
+                          "agentId",
+                    } - # response: status - 200
+
+
+
+- #### Delete Properties
+
+````bash
+
+            ```bash
+                Delete("/<property_id>")
+                - # header: required
+                    {
+                        "Authorization": "Bearer <jwt_token>"
+                    }
+                - # response: status - 200
+                    {
+                        "message": "property Deleted Successfully",
+                        "data": null
+                    }
+            ```
+
+
+````
