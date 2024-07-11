@@ -18,7 +18,6 @@ export class PropertyController {
     return this.propertiesService.postProperties(propertyData)
   }
 
-
   @Put(":id")
   async updateProperties(@Param('id') id: number, @Body() createdProperty: Properties): Promise<Properties> {
     return this.propertiesService.updateProperties(id, createdProperty)
@@ -29,13 +28,11 @@ export class PropertyController {
     return this.propertiesService.deleteProperties(id)
   }
 
-
   @Get('agent/:agentId')
   async getPropertiesByAgentId(@Param('agentId') agentId: string): Promise<Properties[]> {
     const parsedAgentId = parseInt(agentId, 10);
     return this.propertiesService.getPropertiesByAgentId(parsedAgentId);
   }
-
 
   @Get('room/:rooms')
   async getRooms(@Param('rooms') rooms: string): Promise<Properties[]> {
@@ -99,25 +96,4 @@ export class PropertyController {
       return this.propertiesService.getAllPropertiesQueries(filter);
     }
   }
-
-  // @Get()
-  // async paginateProperties(
-  //   @Query("rooms") rooms: string,
-  //   @Query("type") type: string,
-  //   @Query("bath") bath: string,
-  //   @Query("rentOrSale") rentOrSale: string,
-  //   @Query("limit") limit?: string,
-  //   @Query("page") page?: string
-  // ): Promise<Properties[]> {
-  //   const filter = {};
-  //   // Populate filter object based on query parameters...
-  //   const parsedLimit = limit ? parseInt(limit, 10) : 10;
-  //   const parsedPage = page ? parseInt(page, 10) : 1; 
-  //   if (parsedLimit && parsedPage) {
-  //     return this.propertiesService.paginationService(filter, parsedLimit, parsedPage);
-
-  //   } else {
-  //     return this.propertiesService.getAllProperties()
-  //   }
-  // }
 }

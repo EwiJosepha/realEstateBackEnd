@@ -80,13 +80,10 @@ _prod_base_url : https://dandj-collection.vercel.app.app/_
 
     - [Singup](#sign-up)
     - [login](#login)
-
-  - [properties](#properties)
-
-    - [Get agent Properties](#get-agent-properties)
-    - [Create Property](#create-agent-property)
+    - [create-properties](#create-properties)
+    - [Get Properties & Agent](#get-properties-&-agent)
     - [Query properties](#query-properties)
-    - [Edit property](#edit-property)
+    - [Edit properties](#edit-properties)
     - [Delete property](#delete-property)
 
     - #### Sign Up
@@ -108,46 +105,21 @@ _prod_base_url : https://dandj-collection.vercel.app.app/_
 
 - #### Login
 
-     ```bash
-              Post("/login")
-              - # body: require
-                  {
-                      "email": "test_email",
-                      "password": "test_password",
-                  }
-              - # response: status - 200
-                  {
-                      message: "login  Successfull",
-                      data: "<jwt_token>",
-                  }
-          ```
+  ``````bash
+      Post("/login")
+           - # body: require
+               {
+                   "email": "test_email",
+                   "password": "test_password",
+               }
+           - # response: status - 200
+               {
+                   message: "login  Successfull",
+                   data: "<jwt_token>",
+               }
+         `````
 
-  - #### Create Property
-
-                  Post("/properties/")
-                  - # header: required
-                      {
-                          "Authorization": "Bearer <jwt_token>"
-                      }
-                  - # body: required
-          ```` bash
-              {
-                          "agentId": "<id>","name":"String",
-                          "type":"String",
-                          "description":"String","rooms" :"String",
-                          "bath" : "String",
-                          "kitchen" :"String",
-                          "livingRooms": "String",
-                          "location":"String",
-                          "price":"Int",
-                          "areaInKm":"Int",
-                          "rentOrSale":"String",
-                          "shortDescription":"String",
-                          "images":"String",
-                          "agentId",
-                    } - # response: status - 200
-
-
+  ``````
 
 - #### Delete Properties
 
@@ -167,4 +139,55 @@ _prod_base_url : https://dandj-collection.vercel.app.app/_
             ```
 
 
+
 ````
+
+- #### Properties
+
+             Post("/properties")
+             - # header: required
+                 {
+                     "Authorization": "Bearer <jwt_token>"
+                 }
+             - # body: required
+
+
+      {
+                  "agentId": "<id>","name":"String",
+                  "type":"String",
+                  "description":"String","rooms" :"String",
+                  "bath" : "String",
+                  "kitchen" :"String",
+                  "livingRooms": "String",
+                  "location":"String",
+                  "price":"Int",
+                  "areaInKm":"Int",
+                  "rentOrSale":"String",
+                  "shortDescription":"String",
+                  "images":"String",
+                  "agentId",
+            } - # response: status - 200
+
+#### Get Properties with Agent
+
+```bash
+
+    Get("/properties/agent/agentId")
+
+```
+
+#### Query Properties
+
+```bash
+
+Get("/properties?{query param here}")
+
+```
+
+#### Edit Properties
+
+```bash
+
+Post("/properties/{id of the property to edit}, {data:content of property to be edited}")
+
+```
